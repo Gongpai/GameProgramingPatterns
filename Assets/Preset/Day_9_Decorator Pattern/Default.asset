@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08769cb2b4418cc4991e356d5bde2e31, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: 
+  rate: 10
+  range: 15
+  strength: 20
+  cooldown: 1.5
+  color: {r: 1, g: 0.96657693, b: 0, a: 0}
+  weaponName: 
+  weaponPrefab: {fileID: 1405237587810872515, guid: e4911998346b5254ba444c4b5df2a5cc, type: 3}
+  weaponDescription: The default weapon

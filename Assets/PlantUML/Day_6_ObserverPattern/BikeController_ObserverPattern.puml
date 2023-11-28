@@ -1,0 +1,89 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+
+namespace UnityEngine{
+    class MonoBehaviour {
+    
+    }
+}
+
+namespace ObserverPattern{
+    abstract class Subject extends UnityEngine.MonoBehaviour{
+    -_observers : ArrayList
+    
+    #void Attach(Observer observer)
+    #void Detach(Observer observer)
+    #void NotifyObservers()
+    }
+    
+    class ClientObserver extends UnityEngine.MonoBehaviour{
+            -_bikeController : BikeController_ObserverPattern
+            Start()
+            OnGUI()
+    }
+
+    BikeController_ObserverPattern "1" *-- ClientObserver : contains
+    BikeController_ObserverPattern "1" *-- CameraController : contains
+    BikeController_ObserverPattern "1" *-- BikeHandleController : contains
+    class BikeController_ObserverPattern extends Subject
+    {
+        +IsTurboOn : bool
+        +_BikeTurn : BikeTurn
+        +CurrentHealth : float
+        +_isEngineOn : bool
+        -_hudControllerObserverPattern : HUDController_ObserverPattern
+        -_cameraController : CameraController
+        -_bikeHandleController : BikeHandleController
+        -health : float = 100.0f
+
+        void Awake()
+        -void Start()
+        void OnEnable()
+        -void OnDisable()
+        -void StartEngine()
+        +void ToggleTurbo()
+        +void TakeDamage(float amount)
+        +void Turn(BikeTurn _turn)
+    }
+
+    Observer "1" *-- Subject : contains
+    abstract class Observer extends UnityEngine.MonoBehaviour{
+        abstract void Notify(Subject subject)
+    }
+
+    CameraController "1" *-- BikeController_ObserverPattern : contains
+    class CameraController extends Observer{
+        -_isTurboOn:bool
+        -_initialPosition:Vector3;
+        -_shakeMagnitude : float = 0.1f;
+        - _bikeController : BikeController_ObserverPattern
+
+        OnEnable()
+        Update()
+        +override void Notify(Subject subject)
+    }
+    
+    BikeHandleController "3" *-- BikeController_ObserverPattern : contains
+    class BikeHandleController extends Observer{
+        -_bikeTurn : BikeTurn = BikeTurn.Forward
+        -_isEngineOn : bool
+        -speed : float = 1
+        -_bikeController : BikeController_ObserverPattern
+        
+        -void Update()
+        +override void Notify(Subject subject)
+        -void OnTurn()
+    }
+    
+    HUDController_ObserverPattern "1" *-- BikeController_ObserverPattern : contains
+    class HUDController_ObserverPattern extends Observer{
+        -_bikeTurn:BikeTurn = BikeTurn.Forward;
+        -_isTurboOn:bool
+        -_currentHealth:float
+        -_bikeController:BikeController_ObserverPattern
+
+        void OnGUI()
+        +override void Notify(Subject subject)
+    }
+}
+@enduml
